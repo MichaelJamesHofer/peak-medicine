@@ -2,14 +2,7 @@ import { SectionTitle } from "@/components/section-title";
 import { EpisodeBrowser } from "@/components/episode-browser";
 import { EPISODES } from "@/data/episodes";
 
-type EpisodesPageProps = {
-  searchParams?: {
-    topic?: string;
-  };
-};
-
-export default function EpisodesPage({ searchParams }: EpisodesPageProps) {
-  const topic = searchParams?.topic?.toLowerCase() ?? "all";
+export default function EpisodesPage() {
   return (
     <div className="space-y-10">
       <SectionTitle
@@ -17,7 +10,7 @@ export default function EpisodesPage({ searchParams }: EpisodesPageProps) {
         title="Browse every Peak episode"
         description="Search by topic, skim summaries, and jump into detailed show notes with transcripts, references, and checklists."
       />
-      <EpisodeBrowser episodes={EPISODES} initialTopic={topic} />
+      <EpisodeBrowser episodes={EPISODES} />
     </div>
   );
 }
