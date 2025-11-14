@@ -8,7 +8,8 @@ export function HeroBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const canvasEl: HTMLCanvasElement = canvas;
+    const ctx = canvasEl.getContext("2d");
     if (!ctx) return;
 
     let width = 0;
@@ -30,16 +31,16 @@ export function HeroBackground() {
     }
 
     function resize() {
-      const { clientWidth, clientHeight } = canvas;
+      const { clientWidth, clientHeight } = canvasEl;
       width = clientWidth * dpr;
       height = clientHeight * dpr;
-      canvas.width = width;
-      canvas.height = height;
+      canvasEl.width = width;
+      canvasEl.height = height;
       ctx.scale(dpr, dpr);
     }
 
     function draw() {
-      ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+      ctx.clearRect(0, 0, canvasEl.clientWidth, canvasEl.clientHeight);
       ctx.fillStyle = "rgba(59,199,212,0.35)";
       ctx.strokeStyle = "rgba(255,255,255,0.15)";
       particles.forEach((particle) => {
@@ -47,8 +48,8 @@ export function HeroBackground() {
         particle.y += particle.vy;
         if (particle.x < 0 || particle.x > 1) particle.vx *= -1;
         if (particle.y < 0 || particle.y > 1) particle.vy *= -1;
-        const px = particle.x * canvas.clientWidth;
-        const py = particle.y * canvas.clientHeight;
+        const px = particle.x * canvasEl.clientWidth;
+        const py = particle.y * canvasEl.clientHeight;
         ctx.beginPath();
         ctx.arc(px, py, particle.size, 0, Math.PI * 2);
         ctx.fill();
@@ -58,14 +59,14 @@ export function HeroBackground() {
         for (let j = i + 1; j < particleCount; j++) {
           const p1 = particles[i];
           const p2 = particles[j];
-          const dx = (p1.x - p2.x) * canvas.clientWidth;
-          const dy = (p1.y - p2.y) * canvas.clientHeight;
+          const dx = (p1.x - p2.x) * canvasEl.clientWidth;
+          const dy = (p1.y - p2.y) * canvasEl.clientHeight;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 160) {
             ctx.globalAlpha = 1 - dist / 160;
             ctx.beginPath();
-            ctx.moveTo(p1.x * canvas.clientWidth, p1.y * canvas.clientHeight);
-            ctx.lineTo(p2.x * canvas.clientWidth, p2.y * canvas.clientHeight);
+            ctx.moveTo(p1.x * canvasEl.clientWidth, p1.y * canvasEl.clientHeight);
+            ctx.lineTo(p2.x * canvasEl.clientWidth, p2.y * canvasEl.clientHeight);
             ctx.stroke();
             ctx.globalAlpha = 1;
           }
