@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #3bc7d4;
+  --color-primary-dark: #21a9b8;
+  --color-accent: #ffa726;
+  --color-background: #f4f8fb;
+  --color-foreground: #0f172a;
+  --color-foreground-muted: #485a79;
+  --color-card: #ffffff;
+  --color-surface: rgba(255, 255, 255, 0.92);
+  --color-border: #d9e2ef;
+  --color-muted: #e4ebf5;
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --header-border: rgba(148, 163, 184, 0.4);
+  --hero-bg: linear-gradient(130deg, #020611 0%, #0a1735 40%, #062538 100%);
+  --protocol-section-bg: linear-gradient(120deg, #eef2ff, #f8fbff);
+  --protocol-card-bg: #ffffff;
+  --color-safe: #def7ec;
+  --color-caution: #fde68a;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --color-background: #03060f;
+  --color-foreground: #e2e8f0;
+  --color-foreground-muted: #94a3b8;
+  --color-card: #0b1220;
+  --color-surface: rgba(9, 13, 26, 0.85);
+  --color-border: rgba(148, 163, 184, 0.3);
+  --color-muted: #0f172a;
+  --header-bg: rgba(6, 10, 20, 0.82);
+  --header-border: rgba(148, 163, 184, 0.18);
+  --hero-bg: linear-gradient(120deg, #030613 0%, #050d1d 35%, #031427 100%);
+  --protocol-section-bg: linear-gradient(120deg, #050b18, #020613 80%);
+  --protocol-card-bg: rgba(9, 13, 26, 0.9);
+  --color-safe: rgba(46, 204, 149, 0.15);
+  --color-caution: rgba(236, 201, 75, 0.2);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+a {
+  text-decoration: none;
+}
+
+.hero-shell::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 45%),
+    radial-gradient(circle at 80% 30%, rgba(59, 199, 212, 0.15), transparent 55%);
+  animation: heroDrift 25s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08) 1px, transparent 1px, transparent 120px);
+  opacity: 0.25;
+  mix-blend-mode: screen;
+  animation: heroLines 40s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes heroDrift {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4%) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes heroLines {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-120px);
+  }
+}
