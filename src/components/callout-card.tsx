@@ -7,7 +7,7 @@ type CalloutCardProps = {
   tone?: 'default' | 'safe' | 'caution';
 };
 
-const toneClasses: Record<CalloutCardProps['tone'], string> = {
+const toneClasses: Record<NonNullable<CalloutCardProps['tone']>, string> = {
   default: "border-[color:var(--color-border)] bg-[color:var(--color-surface)]",
   safe: "border-emerald-200 bg-safe",
   caution: "border-amber-200 bg-caution",
