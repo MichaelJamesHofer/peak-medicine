@@ -11,6 +11,7 @@ export function HeroBackground() {
     const canvasEl: HTMLCanvasElement = canvas;
     const ctx = canvasEl.getContext("2d");
     if (!ctx) return;
+    const context: CanvasRenderingContext2D = ctx;
 
     let width = 0;
     let height = 0;
@@ -36,13 +37,14 @@ export function HeroBackground() {
       height = clientHeight * dpr;
       canvasEl.width = width;
       canvasEl.height = height;
-      ctx.scale(dpr, dpr);
+      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.scale(dpr, dpr);
     }
 
     function draw() {
-      ctx.clearRect(0, 0, canvasEl.clientWidth, canvasEl.clientHeight);
-      ctx.fillStyle = "rgba(59,199,212,0.35)";
-      ctx.strokeStyle = "rgba(255,255,255,0.15)";
+      context.clearRect(0, 0, canvasEl.clientWidth, canvasEl.clientHeight);
+      context.fillStyle = "rgba(59,199,212,0.35)";
+      context.strokeStyle = "rgba(255,255,255,0.15)";
       particles.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
@@ -50,9 +52,9 @@ export function HeroBackground() {
         if (particle.y < 0 || particle.y > 1) particle.vy *= -1;
         const px = particle.x * canvasEl.clientWidth;
         const py = particle.y * canvasEl.clientHeight;
-        ctx.beginPath();
-        ctx.arc(px, py, particle.size, 0, Math.PI * 2);
-        ctx.fill();
+        context.beginPath();
+        context.arc(px, py, particle.size, 0, Math.PI * 2);
+        context.fill();
       });
       // connective lines
       for (let i = 0; i < particleCount; i++) {
@@ -63,12 +65,12 @@ export function HeroBackground() {
           const dy = (p1.y - p2.y) * canvasEl.clientHeight;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 160) {
-            ctx.globalAlpha = 1 - dist / 160;
-            ctx.beginPath();
-            ctx.moveTo(p1.x * canvasEl.clientWidth, p1.y * canvasEl.clientHeight);
-            ctx.lineTo(p2.x * canvasEl.clientWidth, p2.y * canvasEl.clientHeight);
-            ctx.stroke();
-            ctx.globalAlpha = 1;
+            context.globalAlpha = 1 - dist / 160;
+            context.beginPath();
+            context.moveTo(p1.x * canvasEl.clientWidth, p1.y * canvasEl.clientHeight);
+            context.lineTo(p2.x * canvasEl.clientWidth, p2.y * canvasEl.clientHeight);
+            context.stroke();
+            context.globalAlpha = 1;
           }
         }
       }
