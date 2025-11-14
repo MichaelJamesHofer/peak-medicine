@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SectionTitle } from "@/components/section-title";
-import { HeroBackground } from "@/components/hero-background";
-import { ParallaxShell } from "@/components/parallax-shell";
+import dynamic from "next/dynamic";
+const HeroBackground = dynamic(() => import("@/components/hero-background").then((mod) => mod.HeroBackground), { ssr: false });
+const ParallaxShell = dynamic(() => import("@/components/parallax-shell").then((mod) => mod.ParallaxShell), { ssr: false });
 import { EPISODES } from "@/data/episodes";
 
 const threatSignals = [
