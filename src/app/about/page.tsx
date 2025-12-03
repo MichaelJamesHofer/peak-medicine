@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MEDIA_FEATURES } from "@/data/media";
 
 export const metadata = {
@@ -80,8 +81,15 @@ export default function AboutPage() {
           </div>
           <div className="lg:col-span-2">
             <div className="rounded-2xl border border-border bg-surface p-6">
-              <div className="aspect-square rounded-xl bg-gradient-to-br from-surface-elevated to-surface flex items-center justify-center mb-6">
-                <span className="text-6xl">🩺</span>
+              <div className="aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-surface-elevated to-surface mb-6">
+                <Image
+                  src="/images/davidmusnicksketch.jpg"
+                  alt="Dr. David Musnick"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover"
+                  priority
+                />
               </div>
               <div className="space-y-3 text-body-sm text-foreground-muted">
                 <p>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { EPISODES } from "@/data/episodes";
 import { NewsletterCapture } from "@/components/newsletter-capture";
 import { PlatformBadges } from "@/components/platform-badges";
@@ -204,8 +205,20 @@ export default function Home() {
       {/* Credibility Section */}
       <section className="mx-auto max-w-6xl px-4 py-16 lg:px-6">
         <div className="rounded-3xl border border-border bg-surface p-8 sm:p-12">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16 items-center">
-            <div>
+          <div className="grid gap-10 lg:grid-cols-3 lg:gap-12 items-start">
+            {/* Portrait */}
+            <div className="lg:col-span-1">
+              <div className="aspect-square rounded-2xl overflow-hidden border border-border">
+                <Image
+                  src="/images/davidmusnicksketch.jpg"
+                  alt="Dr. David Musnick"
+                  width={300}
+                  height={300}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="lg:col-span-2">
               <p className="text-caption font-semibold uppercase tracking-wider text-primary mb-3">
                 Your host
               </p>
@@ -240,16 +253,16 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-            </div>
-            <div className="rounded-2xl border border-dashed border-border bg-surface-elevated p-8">
-              <p className="text-body-sm font-semibold text-foreground mb-3">
-                Educational content only
-              </p>
-              <p className="text-body-sm text-foreground-muted">
-                Peak is a signal chain—Dr. Musnick&apos;s clinic notes translated into episodes 
-                so athletes, clinicians, and curious humans can think clearly. This is not 
-                medical advice. Work with your own clinician for diagnosis and treatment.
-              </p>
+              <div className="mt-8 rounded-2xl border border-dashed border-border bg-surface-elevated p-6">
+                <p className="text-body-sm font-semibold text-foreground mb-2">
+                  Educational content only
+                </p>
+                <p className="text-body-sm text-foreground-muted">
+                  Peak is a signal chain—Dr. Musnick&apos;s clinic notes translated into episodes 
+                  so athletes, clinicians, and curious humans can think clearly. This is not 
+                  medical advice. Work with your own clinician for diagnosis and treatment.
+                </p>
+              </div>
             </div>
           </div>
         </div>
