@@ -86,32 +86,32 @@ const functionalExpertise = [
   {
     title: "Brain & autonomic system",
     items: [
-      "Concussion: Dr. Musnick created the world's first integrative concussion protocol based on brain pathophysiology—comprehensive assessments, therapeutic nutrition, supplements, exercise, EMF reduction, brain training, and FSM. He contributed a chapter to Integrative Neurology.",
-      "Memory disorders: full assessment and treatment programs for cognitive impairment, early dementia, and brain fog.",
-      "Other neurologic cases: ADD, Parkinson's disease, MS, peripheral and cranial neuropathy, limbic system dysfunction.",
-      "POTS and dysautonomia: integrative strategies for postural orthostatic tachycardia and EDS-related challenges.",
+      { label: "Concussion", detail: "Dr. Musnick created the world's first integrative concussion protocol based on brain pathophysiology—comprehensive assessments, therapeutic nutrition, supplements, exercise, EMF reduction, brain training, and FSM. He contributed a chapter to Integrative Neurology." },
+      { label: "Memory disorders", detail: "Full assessment and treatment programs for cognitive impairment, early dementia, and brain fog." },
+      { label: "Other neurologic cases", detail: "ADD, Parkinson's disease, MS, peripheral and cranial neuropathy, limbic system dysfunction." },
+      { label: "POTS and dysautonomia", detail: "Integrative strategies for postural orthostatic tachycardia and EDS-related challenges." },
     ],
   },
   {
     title: "Hormones, sleep, and mood",
     items: [
-      "Adrenal, thyroid, and testosterone imbalance—including Hashimoto's support.",
-      "Insomnia: decades of teaching on non-medication and medication approaches using homeopathy, supplements, tapping, stress management, sleep hygiene, and prescriptions only when needed.",
-      "Mood disorders, depression, and anxiety: blends supplements, homeopathy, exercise, tapping, and other modalities when medications fall short or cause side effects.",
-      "Stress, limbic system reset, PTSD, and anxiety management with tapping, microcurrent, breath work, and nervous-system retraining.",
+      { label: "Hormone imbalance", detail: "Adrenal, thyroid, and testosterone imbalance—including Hashimoto's support." },
+      { label: "Insomnia", detail: "Decades of teaching on non-medication and medication approaches using homeopathy, supplements, tapping, stress management, sleep hygiene, and prescriptions only when needed." },
+      { label: "Mood disorders", detail: "Depression and anxiety treatment blending supplements, homeopathy, exercise, tapping, and other modalities when medications fall short or cause side effects." },
+      { label: "Stress & PTSD", detail: "Limbic system reset and anxiety management with tapping, microcurrent, breath work, and nervous-system retraining." },
     ],
   },
   {
     title: "GI, metabolic, and immune",
     items: [
-      "GI disorders including complex SIBO and IBS cases with motility issues.",
-      "Fatty liver (alcoholic and non-alcoholic): precise diagnostics, diet upgrades, phosphatidylcholine, leaky-gut repair, and FSM to decrease inflammation, swelling, and fibrosis.",
-      "Post-COVID and Long COVID: addresses loss of taste and smell plus multi-organ sequelae with supplements, homeopathy, and microcurrent.",
-      "Cardiovascular and lipid issues with integrative options for patients avoiding statins.",
-      "Energy and fatigue: evaluates hormones, mitochondrial ATP/energy production, and lifestyle factors.",
-      "Oxalates and low-oxalate nutrition coaching.",
-      "MCAS/Mast Cell Activation support backed by years of diagnostic and treatment experience.",
-      "Allergy and sensitivity assessment: food, inhalant, mold, sulfur, oxalates, glyphosate.",
+      { label: "GI disorders", detail: "Complex SIBO and IBS cases with motility issues." },
+      { label: "Fatty liver", detail: "Alcoholic and non-alcoholic: precise diagnostics, diet upgrades, phosphatidylcholine, leaky-gut repair, and FSM to decrease inflammation, swelling, and fibrosis." },
+      { label: "Post-COVID & Long COVID", detail: "Addresses loss of taste and smell plus multi-organ sequelae with supplements, homeopathy, and microcurrent." },
+      { label: "Cardiovascular & lipids", detail: "Integrative options for patients avoiding statins." },
+      { label: "Energy & fatigue", detail: "Evaluates hormones, mitochondrial ATP/energy production, and lifestyle factors." },
+      { label: "Oxalates", detail: "Low-oxalate nutrition coaching." },
+      { label: "MCAS", detail: "Mast Cell Activation support backed by years of diagnostic and treatment experience." },
+      { label: "Allergies & sensitivities", detail: "Food, inhalant, mold, sulfur, oxalates, glyphosate assessment." },
     ],
   },
 ];
@@ -129,21 +129,31 @@ const publications = [
 ];
 
 const lectures = [
-  "Forum for Integrative Medicine: concussion/TBI pathophysiology and healing (2020)",
-  "Frequency Specific Microcurrent Advanced Meetings: insomnia, chronic orthopedic pain, and brain injury workshops (2019–2021)",
-  "Institute for Functional Medicine Annual Meeting: chronic orthopedic pain workshop (2019) and functional medicine approach to TBI (2017)",
-  "Washington & British Columbia Associations of Naturopathic Physicians: concussion/TBI lectures (2018–2020)",
-  "Andrews University: three-day chronic pain seminar (2019)",
-  "Bastyr University: chronic orthopedic pain intensive (2019)",
-  "BetterHealthGuy Podcast: concussion and TBI (2020)",
+  { venue: "Forum for Integrative Medicine", topic: "Concussion/TBI pathophysiology and healing", year: "2020" },
+  { venue: "FSM Advanced Meetings", topic: "Insomnia, chronic orthopedic pain, and brain injury workshops", year: "2019–2021" },
+  { venue: "IFM Annual Meeting", topic: "Chronic orthopedic pain workshop; functional medicine approach to TBI", year: "2017, 2019" },
+  { venue: "WA & BC Naturopathic Physicians", topic: "Concussion/TBI lectures", year: "2018–2020" },
+  { venue: "Andrews University", topic: "Three-day chronic pain seminar", year: "2019" },
+  { venue: "Bastyr University", topic: "Chronic orthopedic pain intensive", year: "2019" },
+  { venue: "BetterHealthGuy Podcast", topic: "Concussion and TBI", year: "2020" },
 ];
 
 const facultyTraining = [
-  "Institute for Functional Medicine teaching faculty member",
-  "Sports & Orthopedic Medicine faculty, Bastyr University (16 years)",
-  "Professor at Andrews University Department of Physical Therapy",
-  "Faculty roles at UW Department of Sports Medicine & Orthopedics and Department of Rehabilitation",
-  "Recent CME: CEDH clinical homeopathy, Cogence Immunology training, IFM pain management and autoimmune intensives, FSM Advanced Meetings, SIBO training with Alison Siebecker, EMF protection, genomics interpretation, and ongoing internal medicine board review",
+  { role: "Teaching Faculty", org: "Institute for Functional Medicine" },
+  { role: "Sports & Orthopedic Medicine Faculty", org: "Bastyr University", duration: "16 years" },
+  { role: "Professor, Department of Physical Therapy", org: "Andrews University" },
+  { role: "Faculty", org: "UW Department of Sports Medicine & Orthopedics and Department of Rehabilitation" },
+];
+
+const recentCME = [
+  "CEDH clinical homeopathy",
+  "Cogence Immunology training",
+  "IFM pain management and autoimmune intensives",
+  "FSM Advanced Meetings",
+  "SIBO training with Alison Siebecker",
+  "EMF protection",
+  "Genomics interpretation",
+  "Ongoing internal medicine board review",
 ];
 
 const featuredMedia = MEDIA_FEATURES.slice(0, 4);
@@ -210,17 +220,20 @@ export default function AboutPage() {
                   priority
                 />
               </div>
-              <div className="space-y-3 text-body-sm text-foreground-muted">
-                <p>
-                  <strong className="text-foreground">Location:</strong> Idaho (relocated 2022)
-                </p>
-                <p>
-                  <strong className="text-foreground">Experience:</strong> 35+ years clinical practice
-                </p>
-                <p>
-                  <strong className="text-foreground">Focus:</strong> Integrative sports & functional medicine
-                </p>
-              </div>
+              <dl className="space-y-3 text-body-sm">
+                <div className="flex justify-between">
+                  <dt className="text-foreground-muted">Location</dt>
+                  <dd className="text-foreground font-medium">Idaho (relocated 2022)</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-foreground-muted">Experience</dt>
+                  <dd className="text-foreground font-medium">35+ years</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-foreground-muted">Focus</dt>
+                  <dd className="text-foreground font-medium text-right">Integrative sports &<br />functional medicine</dd>
+                </div>
+              </dl>
             </div>
           </div>
         </div>
@@ -229,17 +242,15 @@ export default function AboutPage() {
       {/* Specialty Highlights */}
       <section className="mb-16">
         <h2 className="text-heading-xl font-bold text-foreground mb-6">Specialty domains at a glance</h2>
-        <div className="rounded-2xl border border-border bg-surface p-8">
-          <ul className="space-y-4">
-            {specialtyHighlights.map((item, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <svg className="h-5 w-5 shrink-0 text-primary mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="text-body text-foreground-muted">{item}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {specialtyHighlights.map((item, index) => (
+            <div
+              key={index}
+              className="rounded-xl border border-border bg-surface p-5"
+            >
+              <p className="text-body text-foreground-muted leading-relaxed">{item}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -249,16 +260,14 @@ export default function AboutPage() {
         <p className="text-body text-foreground-muted mb-8">
           Each plan blends hands-on diagnostics with precise therapeutic tools. Here are the modalities he personally delivers:
         </p>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {treatmentList.map((treatment, index) => (
-            <div
-              key={index}
-              className="rounded-xl border border-border bg-surface px-4 py-3 text-body-sm text-foreground-muted flex items-start gap-3"
-            >
-              <span className="text-primary">•</span>
-              <span>{treatment}</span>
-            </div>
-          ))}
+        <div className="rounded-2xl border border-border bg-surface p-6">
+          <div className="grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+            {treatmentList.map((treatment, index) => (
+              <p key={index} className="text-body-sm text-foreground-muted py-1">
+                {treatment}
+              </p>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -275,7 +284,7 @@ export default function AboutPage() {
           {sportsFocus.map((focus, index) => (
             <div key={index} className="rounded-2xl border border-border bg-surface p-6">
               <h3 className="text-heading font-semibold text-foreground mb-3">{focus.title}</h3>
-              <p className="text-body-sm text-foreground-muted">{focus.description}</p>
+              <p className="text-body-sm text-foreground-muted leading-relaxed">{focus.description}</p>
             </div>
           ))}
         </div>
@@ -293,15 +302,15 @@ export default function AboutPage() {
         <div className="grid gap-6 lg:grid-cols-3">
           {functionalExpertise.map((area, index) => (
             <div key={index} className="rounded-2xl border border-border bg-surface p-6">
-              <h3 className="text-heading font-semibold text-foreground mb-4">{area.title}</h3>
-              <ul className="space-y-3">
+              <h3 className="text-heading font-semibold text-foreground mb-5">{area.title}</h3>
+              <div className="space-y-4">
                 {area.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="flex items-start gap-2 text-body-sm text-foreground-muted">
-                    <span className="text-primary shrink-0">•</span>
-                    <span>{item}</span>
-                  </li>
+                  <div key={itemIndex} className="border-l-2 border-primary/30 pl-4">
+                    <p className="text-body-sm font-semibold text-foreground mb-1">{item.label}</p>
+                    <p className="text-body-sm text-foreground-muted leading-relaxed">{item.detail}</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           ))}
         </div>
@@ -313,27 +322,30 @@ export default function AboutPage() {
           {/* Publications */}
           <div className="rounded-2xl border border-border bg-surface p-8">
             <h2 className="text-heading-lg font-bold text-foreground mb-6">Selected publications</h2>
-            <ul className="space-y-4">
+            <div className="divide-y divide-border">
               {publications.map((pub, index) => (
-                <li key={index}>
-                  <p className="text-body font-semibold text-foreground">{pub.title}</p>
+                <div key={index} className="py-4 first:pt-0 last:pb-0">
+                  <p className="text-body font-semibold text-foreground mb-1">{pub.title}</p>
                   <p className="text-body-sm text-foreground-muted">{pub.source}</p>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
 
           {/* Lectures */}
           <div className="rounded-2xl border border-border bg-surface p-8">
             <h2 className="text-heading-lg font-bold text-foreground mb-6">Lectures & workshops</h2>
-            <ul className="space-y-3">
+            <div className="divide-y divide-border">
               {lectures.map((lecture, index) => (
-                <li key={index} className="flex items-start gap-2 text-body-sm text-foreground-muted">
-                  <span className="text-primary shrink-0">•</span>
-                  <span>{lecture}</span>
-                </li>
+                <div key={index} className="py-4 first:pt-0 last:pb-0">
+                  <div className="flex items-start justify-between gap-4 mb-1">
+                    <p className="text-body font-semibold text-foreground">{lecture.venue}</p>
+                    <span className="text-caption text-foreground-subtle shrink-0">{lecture.year}</span>
+                  </div>
+                  <p className="text-body-sm text-foreground-muted">{lecture.topic}</p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -341,17 +353,37 @@ export default function AboutPage() {
       {/* Teaching & Training */}
       <section className="mb-16">
         <h2 className="text-heading-xl font-bold text-foreground mb-6">Teaching & ongoing training</h2>
-        <div className="rounded-2xl border border-border bg-surface p-8">
-          <ul className="space-y-4">
-            {facultyTraining.map((item, index) => (
-              <li key={index} className="flex items-start gap-3">
-                <svg className="h-5 w-5 shrink-0 text-primary mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="text-body text-foreground-muted">{item}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Faculty Roles */}
+          <div className="rounded-2xl border border-border bg-surface p-8">
+            <h3 className="text-heading font-semibold text-foreground mb-5">Faculty positions</h3>
+            <div className="divide-y divide-border">
+              {facultyTraining.map((item, index) => (
+                <div key={index} className="py-4 first:pt-0 last:pb-0">
+                  <p className="text-body font-semibold text-foreground mb-1">{item.role}</p>
+                  <p className="text-body-sm text-foreground-muted">
+                    {item.org}
+                    {item.duration && <span className="text-foreground-subtle"> · {item.duration}</span>}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recent CME */}
+          <div className="rounded-2xl border border-border bg-surface p-8">
+            <h3 className="text-heading font-semibold text-foreground mb-5">Recent continuing education</h3>
+            <div className="flex flex-wrap gap-2">
+              {recentCME.map((item, index) => (
+                <span
+                  key={index}
+                  className="rounded-full bg-surface-elevated px-4 py-2 text-body-sm text-foreground-muted"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -392,7 +424,7 @@ export default function AboutPage() {
       <section className="mb-16">
         <h2 className="text-heading-xl font-bold text-foreground mb-6">Outside the clinic</h2>
         <div className="rounded-2xl border border-border bg-surface p-8">
-          <p className="text-body text-foreground-muted">
+          <p className="text-body text-foreground-muted leading-relaxed">
             Mountain biking in Sedona, hiking Rainier, skiing, cooking, nature photography, and time 
             with friends and his daughter all keep him grounded. That blend of outdoor life plus 
             constant learning informs the way he approaches every Peak episode and clinical decision tree.
@@ -403,7 +435,7 @@ export default function AboutPage() {
       {/* Disclaimer */}
       <section className="rounded-2xl border border-dashed border-border bg-surface p-8">
         <h2 className="text-heading font-semibold text-foreground mb-4">Educational Only</h2>
-        <div className="space-y-3 text-body text-foreground-muted">
+        <div className="space-y-3 text-body text-foreground-muted leading-relaxed">
           <p>
             Peak Functional & Sports Medicine is an educational platform. This page summarizes 
             Dr. Musnick&apos;s background to provide context for the podcast and does not create 
