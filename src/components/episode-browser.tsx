@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Episode } from "@/data/episodes";
-import { EpisodeList } from "./episode-list";
 
 type EpisodeBrowserProps = {
   episodes: Episode[];
@@ -65,28 +65,49 @@ export function EpisodeBrowser({ episodes, initialTopic = "all" }: EpisodeBrowse
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-4 shadow-soft backdrop-blur">
-        <label className="text-sm font-semibold text-[color:var(--color-foreground-muted)]">
-          Search episodes
-          <input
-            type="search"
-            placeholder="Type keywords from the episode title or summary"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            className="mt-2 w-full rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] px-4 py-3 text-base text-[color:var(--color-foreground)] focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
-        </label>
+    <div className="space-y-8">
+      {/* Filters */}
+      <div className="rounded-2xl border border-border bg-surface p-6">
+        {/* Search */}
+        <div className="mb-6">
+          <label className="text-body-sm font-medium text-foreground mb-2 block">
+            Search episodes
+          </label>
+          <div className="relative">
+            <svg
+              className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-foreground-subtle"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="search"
+              placeholder="Search by title or summary..."
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              className="w-full rounded-xl border border-border bg-background pl-12 pr-4 py-3 text-body text-foreground placeholder:text-foreground-subtle focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+            />
+          </div>
+        </div>
+
+        {/* Topic filters */}
         <div>
-          <p className="mb-2 text-sm font-semibold text-[color:var(--color-foreground-muted)]">Filter by topic</p>
+          <p className="text-body-sm font-medium text-foreground mb-3">Filter by topic</p>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => updateTopic("all")}
-              className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+              className={`rounded-full border px-4 py-2 text-body-sm font-medium transition-all duration-200 ${
                 topic === "all"
                   ? "border-primary bg-primary/10 text-primary"
-                  : "border-[color:var(--color-border)] bg-[color:var(--color-card)] text-[color:var(--color-foreground-muted)]"
+                  : "border-border bg-background text-foreground-muted hover:border-primary/50 hover:text-foreground"
               }`}
             >
               All topics
@@ -96,10 +117,10 @@ export function EpisodeBrowser({ episodes, initialTopic = "all" }: EpisodeBrowse
                 key={topicOption.value}
                 type="button"
                 onClick={() => updateTopic(topicOption.value)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                className={`rounded-full border px-4 py-2 text-body-sm font-medium transition-all duration-200 ${
                   topic === topicOption.value
                     ? "border-primary bg-primary/10 text-primary"
-                    : "border-[color:var(--color-border)] bg-[color:var(--color-card)] text-[color:var(--color-foreground-muted)]"
+                    : "border-border bg-background text-foreground-muted hover:border-primary/50 hover:text-foreground"
                 }`}
               >
                 {topicOption.label}
@@ -108,7 +129,105 @@ export function EpisodeBrowser({ episodes, initialTopic = "all" }: EpisodeBrowse
           </div>
         </div>
       </div>
-      <EpisodeList episodes={filtered} />
+
+      {/* Results count */}
+      <div className="flex items-center justify-between">
+        <p className="text-body-sm text-foreground-muted">
+          {filtered.length} episode{filtered.length !== 1 ? "s" : ""}
+          {topic !== "all" && ` in "${topics.find((t) => t.value === topic)?.label}"`}
+          {query && ` matching "${query}"`}
+        </p>
+      </div>
+
+      {/* Episode grid */}
+      {filtered.length > 0 ? (
+        <div className="grid gap-6 md:grid-cols-2">
+          {filtered.map((episode) => (
+            <EpisodeCard key={episode.slug} episode={episode} />
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-12 text-center">
+          <p className="text-body text-foreground-muted mb-2">No episodes match your criteria</p>
+          <button
+            type="button"
+            onClick={() => {
+              setQuery("");
+              updateTopic("all");
+            }}
+            className="text-body-sm font-semibold text-primary hover:text-primary-hover transition-colors duration-200"
+          >
+            Clear filters
+          </button>
+        </div>
+      )}
     </div>
+  );
+}
+
+function EpisodeCard({ episode }: { episode: Episode }) {
+  const dateFormatter = new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  const publishDate = dateFormatter.format(new Date(episode.publishDate));
+
+  return (
+    <Link
+      href={`/episodes/${episode.slug}`}
+      className="group flex flex-col rounded-2xl border border-border bg-surface p-6 hover:border-primary/50 hover:shadow-glow-sm transition-all duration-300"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-body-sm font-bold text-primary group-hover:bg-primary group-hover:text-background transition-all duration-200">
+          {episode.number.toString().padStart(2, "0")}
+        </span>
+        <div className="flex items-center gap-3 text-caption text-foreground-subtle">
+          <span>{publishDate}</span>
+          {episode.durationMinutes && (
+            <>
+              <span>•</span>
+              <span>{episode.durationMinutes} min</span>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* Content */}
+      <h3 className="text-heading font-semibold text-foreground group-hover:text-primary transition-colors duration-200 mb-2">
+        {episode.title}
+      </h3>
+      <p className="text-body-sm text-foreground-muted line-clamp-2 mb-4 flex-1">
+        {episode.summary}
+      </p>
+
+      {/* Topics */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {episode.topics.map((topic) => (
+          <span
+            key={topic}
+            className="rounded-full bg-surface-elevated px-3 py-1 text-caption text-foreground-subtle"
+          >
+            {topic}
+          </span>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-4 border-t border-border">
+        <span className="text-body-sm font-medium text-primary group-hover:text-primary-hover transition-colors duration-200">
+          Listen & read notes
+        </span>
+        <svg
+          className="h-4 w-4 text-foreground-muted group-hover:text-primary group-hover:translate-x-1 transition-all duration-200"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </Link>
   );
 }

@@ -1,56 +1,97 @@
 'use client';
 
 import Link from "next/link";
+import { useState } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { PlatformBadges } from "@/components/platform-badges";
 
 const navLinks = [
-  { href: "/", label: "Home" },
   { href: "/episodes", label: "Episodes" },
-  { href: "/media", label: "Media" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-[color:var(--header-border)] bg-[color:var(--header-bg)] backdrop-blur supports-[backdrop-filter]:bg-[color:var(--header-bg)]/90 transition-colors">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 gap-4">
-        <Link href="/" className="flex items-center gap-3 text-[color:var(--color-foreground)]">
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-lg font-bold text-white shadow-soft">
-            ⛰️
+    <header className="sticky top-0 z-50 border-b border-border bg-[var(--header-bg)] backdrop-blur-xl">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 lg:px-6">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 group">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-lg font-bold text-background shadow-glow-sm group-hover:shadow-glow transition-shadow duration-300">
+            ⛰
           </span>
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--color-foreground-muted)]">
+          <div className="hidden sm:block">
+            <p className="text-caption font-semibold uppercase tracking-[0.2em] text-foreground-muted">
               Peak
             </p>
-            <p className="text-base font-semibold text-[color:var(--color-foreground)]">
-              Functional & Sports Medicine
+            <p className="text-body-sm font-semibold text-foreground leading-tight">
+              Functional Medicine
             </p>
           </div>
         </Link>
-        <nav className="hidden gap-6 text-sm font-semibold text-[color:var(--color-foreground-muted)] lg:flex">
+
+        {/* Desktop Nav */}
+        <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="transition hover:text-[color:var(--color-foreground)]"
+              className="text-body-sm font-medium text-foreground-muted hover:text-foreground transition-colors duration-200"
             >
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="hidden items-center gap-3 lg:flex">
+
+        {/* Desktop Actions */}
+        <div className="hidden items-center gap-4 lg:flex">
+          <PlatformBadges variant="compact" />
+          <div className="h-5 w-px bg-border" />
           <ThemeToggle />
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-foreground-muted hover:bg-surface hover:text-foreground transition-colors duration-200 lg:hidden"
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? (
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
       </div>
-      <nav className="mt-3 flex gap-4 overflow-x-auto px-4 pb-4 text-sm font-semibold text-[color:var(--color-foreground-muted)] lg:hidden">
-        {navLinks.map((link) => (
-          <Link key={link.href} href={link.href} className="whitespace-nowrap rounded-full border border-[color:var(--color-border)] px-3 py-1.5">
-            {link.label}
-          </Link>
-        ))}
-        <ThemeToggle />
-      </nav>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="border-t border-border bg-surface px-4 py-6 lg:hidden animate-fade-in">
+          <nav className="flex flex-col gap-4 mb-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-body font-medium text-foreground-muted hover:text-foreground transition-colors duration-200"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center justify-between pt-4 border-t border-border">
+            <PlatformBadges variant="compact" />
+            <ThemeToggle />
+          </div>
+        </div>
+      )}
     </header>
   );
 }

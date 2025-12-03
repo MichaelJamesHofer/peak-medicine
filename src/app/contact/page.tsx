@@ -1,28 +1,70 @@
-import { SectionTitle } from "@/components/section-title";
 import { ContactForm } from "@/components/contact-form";
-import { CalloutCard } from "@/components/callout-card";
+
+export const metadata = {
+  title: "Contact",
+  description: "Get in touch with the Peak Functional Medicine team for podcast feedback, business inquiries, or speaking engagements.",
+};
+
+const contactReasons = [
+  {
+    icon: "🎙️",
+    title: "Podcast feedback",
+    description: "Episode ideas, guest suggestions, or general feedback. We read every message.",
+  },
+  {
+    icon: "💼",
+    title: "Business & speaking",
+    description: "Consulting, course licensing, or speaking engagements. Include dates and scope.",
+  },
+  {
+    icon: "📝",
+    title: "Press & media",
+    description: "Interview requests, media features, or collaboration opportunities.",
+  },
+];
 
 export default function ContactPage() {
   return (
-    <div className="space-y-10">
-      <SectionTitle
-        eyebrow="Contact"
-        title="Reach the Peak team"
-        description="We can’t give personal medical advice here, but we love hearing from listeners, partners, and event organizers."
-      />
-      <div className="grid gap-6 md:grid-cols-2">
-        <CalloutCard
-          title="Need podcast support?"
-          description="Send feedback, references, or guest ideas. We read every email and queue the most common requests into future episodes."
-        />
-        <CalloutCard
-          title="Business & speaking"
-          description="For consulting, course licensing, or speaking engagements, use the form and include dates plus scope."
-          tone="safe"
-        />
+    <div className="mx-auto max-w-6xl px-4 py-12 lg:px-6 lg:py-16">
+      {/* Header */}
+      <div className="mb-12">
+        <p className="text-caption font-semibold uppercase tracking-wider text-primary mb-2">
+          Get in touch
+        </p>
+        <h1 className="text-display font-bold text-foreground mb-4">
+          Contact us
+        </h1>
+        <p className="text-body-lg text-foreground-muted max-w-2xl">
+          We can&apos;t provide personal medical advice through this form, but we 
+          love hearing from listeners, partners, and event organizers.
+        </p>
       </div>
-      <div className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-8 shadow-soft transition">
-        <ContactForm />
+
+      <div className="grid gap-12 lg:grid-cols-3">
+        {/* Contact Reasons */}
+        <div className="space-y-4">
+          {contactReasons.map((reason) => (
+            <div
+              key={reason.title}
+              className="rounded-2xl border border-border bg-surface p-6"
+            >
+              <span className="text-2xl mb-3 block">{reason.icon}</span>
+              <h3 className="text-body font-semibold text-foreground mb-2">
+                {reason.title}
+              </h3>
+              <p className="text-body-sm text-foreground-muted">
+                {reason.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Contact Form */}
+        <div className="lg:col-span-2">
+          <div className="rounded-2xl border border-border bg-surface p-8">
+            <ContactForm />
+          </div>
+        </div>
       </div>
     </div>
   );

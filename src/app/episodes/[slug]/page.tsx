@@ -2,9 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { EPISODES } from "@/data/episodes";
-import { TagPill } from "@/components/tag-pill";
-import { EpisodeList } from "@/components/episode-list";
-import { DisclaimerBox } from "@/components/disclaimer-box";
+import { NewsletterCapture } from "@/components/newsletter-capture";
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
   month: "long",
@@ -19,13 +17,11 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const episode = EPISODES.find((item) => item.slug === params.slug);
   if (!episode) {
-    return {
-      title: "Episode not found",
-    };
+    return { title: "Episode not found" };
   }
 
   return {
-    title: `${episode.title} (Episode ${episode.number})`,
+    title: `${episode.title} (Ep. ${episode.number})`,
     description: episode.summary,
   };
 }
@@ -42,121 +38,256 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
       item.slug !== episode.slug && item.topics.some((topic) => episode.topics.includes(topic))
   ).slice(0, 3);
 
-  return (
-    <article className="space-y-10">
-      <div className="space-y-4 rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-8 shadow-soft">
-        <nav className="text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--color-foreground-muted)]">
-          <Link href="/" className="hover:text-primary">
-            Home
-          </Link>{" "}/{" "}
-          <Link href="/episodes" className="hover:text-primary">
-            Episodes
-          </Link>{" "}/ {episode.title}
-        </nav>
-        <p className="text-sm font-semibold text-primary">Episode {episode.number}</p>
-        <h1 className="text-4xl font-semibold text-[color:var(--color-foreground)]">{episode.title}</h1>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-[color:var(--color-foreground-muted)]">
-          <span>{publishDate}</span>
-          {episode.durationMinutes ? <span>• {episode.durationMinutes} min</span> : null}
-          {episode.transcriptUrl ? (
-            <Link href={episode.transcriptUrl} className="text-primary underline">
-              Transcript
-            </Link>
-          ) : null}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {episode.topics.map((topic) => (
-            <TagPill key={`${episode.slug}-${topic}`} label={topic} />
-          ))}
-        </div>
-        {episode.audioUrl && (
-          <audio controls className="mt-6 w-full" src={episode.audioUrl}>
-            Your browser does not support the audio element.
-          </audio>
-        )}
-        {episode.videoUrl && (
-          <div className="mt-6 aspect-video w-full overflow-hidden rounded-2xl">
-            <iframe
-              src={episode.videoUrl}
-              title={episode.title}
-              className="h-full w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        )}
-      </div>
+  const currentIndex = EPISODES.findIndex((ep) => ep.slug === episode.slug);
+  const prevEpisode = currentIndex < EPISODES.length - 1 ? EPISODES[currentIndex + 1] : null;
+  const nextEpisode = currentIndex > 0 ? EPISODES[currentIndex - 1] : null;
 
-      <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
-          <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">Key takeaways</h2>
-          <ul className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
-            {episode.keyTakeaways.map((item) => (
-              <li key={item} className="flex gap-3">
-                <span className="text-primary">•</span>
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {episode.checklist && (
-          <div className="rounded-3xl border border-emerald-200 bg-safe p-6 shadow-soft">
-            <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">Order-of-operations checklist</h2>
-            <ul className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
-              {episode.checklist.map((item) => (
-                <li key={item} className="flex gap-3">
-                  <span>✅</span>
-                  <span>{item}</span>
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-12 lg:px-6 lg:py-16">
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-2 text-body-sm text-foreground-muted mb-8">
+        <Link href="/" className="hover:text-foreground transition-colors duration-200">
+          Home
+        </Link>
+        <span>/</span>
+        <Link href="/episodes" className="hover:text-foreground transition-colors duration-200">
+          Episodes
+        </Link>
+        <span>/</span>
+        <span className="text-foreground">Ep. {episode.number}</span>
+      </nav>
+
+      <div className="grid gap-12 lg:grid-cols-3">
+        {/* Main Content */}
+        <div className="lg:col-span-2 space-y-10">
+          {/* Header */}
+          <header>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-heading font-bold text-primary">
+                {episode.number.toString().padStart(2, "0")}
+              </span>
+              <div className="flex items-center gap-3 text-body-sm text-foreground-muted">
+                <span>{publishDate}</span>
+                {episode.durationMinutes && (
+                  <>
+                    <span>•</span>
+                    <span>{episode.durationMinutes} min</span>
+                  </>
+                )}
+              </div>
+            </div>
+            <h1 className="text-display font-bold text-foreground mb-4">
+              {episode.title}
+            </h1>
+            <p className="text-body-lg text-foreground-muted">
+              {episode.summary}
+            </p>
+            <div className="flex flex-wrap gap-2 mt-6">
+              {episode.topics.map((topic) => (
+                <Link
+                  key={topic}
+                  href={`/episodes?topic=${encodeURIComponent(topic.toLowerCase())}`}
+                  className="rounded-full border border-border bg-surface px-4 py-2 text-body-sm text-foreground-muted hover:border-primary hover:text-primary transition-all duration-200"
+                >
+                  {topic}
+                </Link>
+              ))}
+            </div>
+          </header>
+
+          {/* Player Placeholder */}
+          <div className="rounded-2xl border border-border bg-surface overflow-hidden">
+            <div className="aspect-video bg-gradient-to-br from-surface to-surface-elevated flex flex-col items-center justify-center gap-4">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <svg className="h-10 w-10" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <p className="text-body-sm text-foreground-muted">
+                Episode player coming soon
+              </p>
+            </div>
+            {episode.audioUrl && (
+              <div className="p-4 border-t border-border">
+                <audio controls className="w-full" src={episode.audioUrl}>
+                  Your browser does not support audio.
+                </audio>
+              </div>
+            )}
+          </div>
+
+          {/* Key Takeaways */}
+          <section className="rounded-2xl border border-border bg-surface p-8">
+            <h2 className="text-heading-lg font-bold text-foreground mb-6 flex items-center gap-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                💡
+              </span>
+              Key takeaways
+            </h2>
+            <ul className="space-y-4">
+              {episode.keyTakeaways.map((takeaway, index) => (
+                <li key={index} className="flex gap-4">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-caption font-bold text-primary">
+                    {index + 1}
+                  </span>
+                  <span className="text-body text-foreground-muted">{takeaway}</span>
                 </li>
               ))}
             </ul>
-          </div>
-        )}
-      </section>
+          </section>
 
-      <section className="space-y-8">
-        {episode.sections.map((section) => (
-          <div key={section.title} className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
-            <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">{section.title}</h2>
-            <div className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
-              {section.content.map((paragraph, index) => (
-                <p key={`${section.title}-${index}`}>{paragraph}</p>
+          {/* Checklist */}
+          {episode.checklist && episode.checklist.length > 0 && (
+            <section className="rounded-2xl border border-success/30 bg-success/5 p-8">
+              <h2 className="text-heading-lg font-bold text-foreground mb-6 flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-success/20 text-success">
+                  ✓
+                </span>
+                Order-of-operations checklist
+              </h2>
+              <ul className="space-y-3">
+                {episode.checklist.map((item, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <svg className="h-5 w-5 shrink-0 text-success mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-body text-foreground-muted">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Show Notes / Sections */}
+          {episode.sections.length > 0 && (
+            <section className="space-y-6">
+              <h2 className="text-heading-lg font-bold text-foreground">Show notes</h2>
+              {episode.sections.map((section, index) => (
+                <div key={index} className="rounded-2xl border border-border bg-surface p-6">
+                  <h3 className="text-heading font-semibold text-foreground mb-4">
+                    {section.title}
+                  </h3>
+                  <div className="space-y-3">
+                    {section.content.map((paragraph, pIndex) => (
+                      <p key={pIndex} className="text-body text-foreground-muted">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </div>
               ))}
-            </div>
+            </section>
+          )}
+
+          {/* References */}
+          {episode.references && episode.references.length > 0 && (
+            <section className="rounded-2xl border border-border bg-surface p-8">
+              <h2 className="text-heading-lg font-bold text-foreground mb-6">
+                References & resources
+              </h2>
+              <ul className="space-y-3">
+                {episode.references.map((ref, index) => (
+                  <li key={index}>
+                    <a
+                      href={ref.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-body text-primary hover:text-primary-hover transition-colors duration-200"
+                    >
+                      <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      {ref.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* Episode Navigation */}
+          <div className="flex items-center justify-between pt-8 border-t border-border">
+            {prevEpisode ? (
+              <Link
+                href={`/episodes/${prevEpisode.slug}`}
+                className="group flex items-center gap-3 text-foreground-muted hover:text-foreground transition-colors duration-200"
+              >
+                <svg className="h-5 w-5 group-hover:-translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <div className="text-left">
+                  <p className="text-caption text-foreground-subtle">Previous</p>
+                  <p className="text-body-sm font-medium">Ep. {prevEpisode.number}</p>
+                </div>
+              </Link>
+            ) : (
+              <div />
+            )}
+            {nextEpisode ? (
+              <Link
+                href={`/episodes/${nextEpisode.slug}`}
+                className="group flex items-center gap-3 text-foreground-muted hover:text-foreground transition-colors duration-200"
+              >
+                <div className="text-right">
+                  <p className="text-caption text-foreground-subtle">Next</p>
+                  <p className="text-body-sm font-medium">Ep. {nextEpisode.number}</p>
+                </div>
+                <svg className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            ) : (
+              <div />
+            )}
           </div>
-        ))}
-      </section>
+        </div>
 
-      {episode.references && episode.references.length > 0 && (
-        <section className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
-          <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">References & resources</h2>
-          <ul className="mt-4 space-y-2 text-[color:var(--color-foreground-muted)]">
-            {episode.references.map((ref) => (
-              <li key={ref.url}>
-                <Link href={ref.url} className="text-primary underline" target="_blank">
-                  {ref.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+        {/* Sidebar */}
+        <aside className="space-y-8">
+          {/* Newsletter */}
+          <NewsletterCapture
+            variant="inline"
+            heading="Get episode notes"
+            description="Weekly protocols delivered to your inbox."
+          />
 
-      <DisclaimerBox>
-        <p>
-          The Peak Functional & Sports Medicine podcast and website are educational resources. They do not provide medical advice or individual treatment plans, and listening does not create a doctor–patient relationship.
-        </p>
-        <p>
-          Talk with your own clinician before acting on the steps we describe. We disclose all sponsors and affiliate relationships on-air and in show notes.
-        </p>
-      </DisclaimerBox>
+          {/* Disclaimer */}
+          <div className="rounded-2xl border border-dashed border-border bg-surface p-6">
+            <p className="text-body-sm font-semibold text-foreground mb-2">
+              Educational only
+            </p>
+            <p className="text-body-sm text-foreground-muted">
+              This episode does not provide medical advice. Consult your clinician 
+              before acting on any protocols discussed.
+            </p>
+          </div>
 
-      {related.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">Related episodes</h2>
-          <EpisodeList episodes={related} compact />
-        </section>
-      )}
-    </article>
+          {/* Related Episodes */}
+          {related.length > 0 && (
+            <div>
+              <h3 className="text-heading font-semibold text-foreground mb-4">
+                Related episodes
+              </h3>
+              <div className="space-y-3">
+                {related.map((ep) => (
+                  <Link
+                    key={ep.slug}
+                    href={`/episodes/${ep.slug}`}
+                    className="group block rounded-xl border border-border bg-surface p-4 hover:border-primary/50 transition-all duration-200"
+                  >
+                    <p className="text-caption font-semibold text-primary mb-1">
+                      Ep. {ep.number}
+                    </p>
+                    <p className="text-body-sm font-medium text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-2">
+                      {ep.title}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </aside>
+      </div>
+    </div>
   );
 }

@@ -20,16 +20,16 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://peak.michaeljameshofer.com"),
   title: {
     default: "Peak Functional & Sports Medicine",
-    template: "%s | Peak Functional & Sports Medicine",
+    template: "%s | Peak Functional Medicine",
   },
   description:
-    "Evidence-aware functional and sports medicine resources, episodes, and order-of-operations frameworks for athletes and clinicians.",
+    "Order-of-operations functional medicine for athletes and curious humans. Protocols, episodes, and frameworks with Dr. David Musnick.",
   openGraph: {
     title: "Peak Functional & Sports Medicine",
     description:
-      "Podcast hub and educational resource for order-of-operations functional & sports medicine.",
+      "Order-of-operations functional medicine. Protocols and frameworks that cut through the noise.",
     url: "https://peak.michaeljameshofer.com",
-    siteName: "Peak Functional & Sports Medicine",
+    siteName: "Peak Functional Medicine",
     type: "website",
   },
 };
@@ -40,14 +40,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-site text-[color:var(--color-foreground)] transition-colors duration-300`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}>
         <ThemeProvider>
-          <div className="flex min-h-screen flex-col bg-site transition-colors duration-300">
+          <div className="flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1 px-4 py-10">
-              <div className="mx-auto flex w-full max-w-6xl flex-col gap-16">{children}</div>
-            </main>
+            <main className="flex-1">{children}</main>
             <SiteFooter />
           </div>
         </ThemeProvider>

@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { PlatformBadges } from "@/components/platform-badges";
+import { NewsletterCapture } from "@/components/newsletter-capture";
 
 const footerLinks = [
   { href: "/episodes", label: "Episodes" },
-  { href: "/media", label: "Media" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
   { href: "/legal/disclaimer", label: "Disclaimer" },
@@ -10,23 +11,69 @@ const footerLinks = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-[color:var(--color-border)] bg-[color:var(--color-card)]/80 transition-colors">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 md:flex-row md:items-center md:justify-between text-[color:var(--color-foreground)]">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[color:var(--color-foreground-muted)]">
-            Peak Functional & Sports Medicine
+    <footer className="mt-20 border-t border-border bg-surface">
+      <div className="mx-auto max-w-6xl px-4 py-16 lg:px-6">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+          {/* Brand Column */}
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent text-lg font-bold text-background">
+                ⛰
+              </span>
+              <div>
+                <p className="text-caption font-semibold uppercase tracking-[0.2em] text-foreground-muted">
+                  Peak
+                </p>
+                <p className="text-body-sm font-semibold text-foreground">
+                  Functional Medicine
+                </p>
+              </div>
+            </div>
+            <p className="text-body-sm text-foreground-muted mb-6 max-w-xs">
+              Order-of-operations medicine for athletes and curious humans. Evidence-aware protocols that cut through noise.
+            </p>
+            <PlatformBadges variant="compact" className="mb-6" />
+          </div>
+
+          {/* Links Column */}
+          <div>
+            <h4 className="text-body-sm font-semibold text-foreground mb-4">Navigation</h4>
+            <nav className="flex flex-col gap-3">
+              {footerLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-body-sm text-foreground-muted hover:text-foreground transition-colors duration-200"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Newsletter Column */}
+          <div>
+            <NewsletterCapture
+              variant="footer"
+              heading="Join the signal"
+              description="Weekly protocols, no fluff."
+            />
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-caption text-foreground-subtle">
+            © {new Date().getFullYear()} Peak Functional & Sports Medicine. Educational content only.
           </p>
-          <p className="mt-2 text-sm text-[color:var(--color-foreground-muted)]">
-            Educational only, not medical advice. © {new Date().getFullYear()} Peak Functional & Sports Medicine.
+          <p className="text-caption text-foreground-subtle">
+            Not medical advice. See{" "}
+            <Link href="/legal/disclaimer" className="text-foreground-muted hover:text-foreground transition-colors duration-200">
+              disclaimer
+            </Link>
+            .
           </p>
         </div>
-        <nav className="flex flex-wrap gap-4 text-sm font-semibold text-[color:var(--color-foreground-muted)]">
-          {footerLinks.map((link) => (
-            <Link key={link.href} href={link.href} className="transition hover:text-[color:var(--color-foreground)]">
-              {link.label}
-            </Link>
-          ))}
-        </nav>
       </div>
     </footer>
   );

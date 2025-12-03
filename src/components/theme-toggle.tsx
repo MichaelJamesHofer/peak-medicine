@@ -2,27 +2,26 @@
 
 import { useTheme } from "@/components/theme-provider";
 
-type ThemeToggleProps = {
-  variant?: "dark" | "light";
-};
-
-export function ThemeToggle({ variant = "light" }: ThemeToggleProps) {
+export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
   const next = theme === "light" ? "dark" : "light";
 
-  const baseClasses =
-    "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50";
-  const palette =
-    variant === "dark"
-      ? "border-white/20 bg-white/10 text-white hover:border-primary/50 hover:bg-white/20"
-      : "border-[color:var(--color-border)] bg-[color:var(--color-card)] text-[color:var(--color-foreground)] hover:border-primary hover:text-primary";
-
   return (
-    <button type="button" onClick={() => setTheme(next)} className={`${baseClasses} ${palette}`}>
-      <span aria-hidden className="text-base">
-        {theme === "light" ? "🌙" : "☀️"}
-      </span>
-      {next} mode
+    <button
+      type="button"
+      onClick={() => setTheme(next)}
+      className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-foreground-muted hover:border-primary hover:text-primary transition-all duration-200"
+      aria-label={`Switch to ${next} mode`}
+    >
+      {theme === "light" ? (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      ) : (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      )}
     </button>
   );
 }
