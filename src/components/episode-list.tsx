@@ -14,7 +14,7 @@ export function EpisodeList({ episodes, limit, compact }: EpisodeListProps) {
 
   if (!list.length) {
     return (
-      <p className="rounded-xl border border-dashed border-slate-200 bg-white/70 p-6 text-sm text-slate-500">
+      <p className="rounded-xl border border-dashed border-[color:var(--color-border)] bg-[color:var(--color-card)]/70 p-6 text-sm text-[color:var(--color-foreground-muted)]">
         No episodes match yet. Try adjusting your filters.
       </p>
     );

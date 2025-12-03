@@ -17,7 +17,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://peak-functional.vercel.app"),
+  metadataBase: new URL("https://peak.michaeljameshofer.com"),
   title: {
     default: "Peak Functional & Sports Medicine",
     template: "%s | Peak Functional & Sports Medicine",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Peak Functional & Sports Medicine",
     description:
       "Podcast hub and educational resource for order-of-operations functional & sports medicine.",
-    url: "https://peak-functional.vercel.app",
+    url: "https://peak.michaeljameshofer.com",
     siteName: "Peak Functional & Sports Medicine",
     type: "website",
   },

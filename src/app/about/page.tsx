@@ -26,7 +26,6 @@ const treatmentList = [
   "Scar assessment and treatment",
   "Platelet Rich Plasma (PRP)",
   "Ultrasound-guided injections",
-  "Low Level Laser Therapy (LLLT)",
 ];
 
 const sportsFocus = [

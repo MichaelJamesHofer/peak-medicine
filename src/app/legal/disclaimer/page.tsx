@@ -43,9 +43,9 @@ export default function LegalDisclaimerPage() {
       />
       <div className="space-y-6">
         {sections.map((section) => (
-          <div key={section.title} className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft">
-            <h2 className="text-2xl font-semibold text-slate-900">{section.title}</h2>
-            <ul className="mt-4 space-y-3 text-slate-600">
+          <div key={section.title} className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
+            <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">{section.title}</h2>
+            <ul className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
               {section.body.map((item) => (
                 <li key={item}>• {item}</li>
               ))}

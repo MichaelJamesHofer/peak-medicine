@@ -44,8 +44,8 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
 
   return (
     <article className="space-y-10">
-      <div className="space-y-4 rounded-3xl border border-slate-200 bg-white/80 p-8 shadow-soft">
-        <nav className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">
+      <div className="space-y-4 rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-8 shadow-soft">
+        <nav className="text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--color-foreground-muted)]">
           <Link href="/" className="hover:text-primary">
             Home
           </Link>{" "}/{" "}
@@ -54,8 +54,8 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
           </Link>{" "}/ {episode.title}
         </nav>
         <p className="text-sm font-semibold text-primary">Episode {episode.number}</p>
-        <h1 className="text-4xl font-semibold text-slate-900">{episode.title}</h1>
-        <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600">
+        <h1 className="text-4xl font-semibold text-[color:var(--color-foreground)]">{episode.title}</h1>
+        <div className="flex flex-wrap items-center gap-3 text-sm text-[color:var(--color-foreground-muted)]">
           <span>{publishDate}</span>
           {episode.durationMinutes ? <span>• {episode.durationMinutes} min</span> : null}
           {episode.transcriptUrl ? (
@@ -88,9 +88,9 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
       </div>
 
       <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft">
-          <h2 className="text-2xl font-semibold text-slate-900">Key takeaways</h2>
-          <ul className="mt-4 space-y-3 text-slate-600">
+        <div className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
+          <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">Key takeaways</h2>
+          <ul className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
             {episode.keyTakeaways.map((item) => (
               <li key={item} className="flex gap-3">
                 <span className="text-primary">•</span>
@@ -101,8 +101,8 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
         </div>
         {episode.checklist && (
           <div className="rounded-3xl border border-emerald-200 bg-safe p-6 shadow-soft">
-            <h2 className="text-2xl font-semibold text-slate-900">Order-of-operations checklist</h2>
-            <ul className="mt-4 space-y-3 text-slate-700">
+            <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">Order-of-operations checklist</h2>
+            <ul className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
               {episode.checklist.map((item) => (
                 <li key={item} className="flex gap-3">
                   <span>✅</span>
@@ -116,9 +116,9 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
 
       <section className="space-y-8">
         {episode.sections.map((section) => (
-          <div key={section.title} className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft">
-            <h2 className="text-2xl font-semibold text-slate-900">{section.title}</h2>
-            <div className="mt-4 space-y-3 text-slate-700">
+          <div key={section.title} className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
+            <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">{section.title}</h2>
+            <div className="mt-4 space-y-3 text-[color:var(--color-foreground-muted)]">
               {section.content.map((paragraph, index) => (
                 <p key={`${section.title}-${index}`}>{paragraph}</p>
               ))}
@@ -128,9 +128,9 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
       </section>
 
       {episode.references && episode.references.length > 0 && (
-        <section className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-soft">
-          <h2 className="text-2xl font-semibold text-slate-900">References & resources</h2>
-          <ul className="mt-4 space-y-2 text-slate-700">
+        <section className="rounded-3xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] p-6 shadow-soft">
+          <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">References & resources</h2>
+          <ul className="mt-4 space-y-2 text-[color:var(--color-foreground-muted)]">
             {episode.references.map((ref) => (
               <li key={ref.url}>
                 <Link href={ref.url} className="text-primary underline" target="_blank">
@@ -153,7 +153,7 @@ export default function EpisodeDetailPage({ params }: { params: { slug: string }
 
       {related.length > 0 && (
         <section className="space-y-4">
-          <h2 className="text-2xl font-semibold text-slate-900">Related episodes</h2>
+          <h2 className="text-2xl font-semibold text-[color:var(--color-foreground)]">Related episodes</h2>
           <EpisodeList episodes={related} compact />
         </section>
       )}
