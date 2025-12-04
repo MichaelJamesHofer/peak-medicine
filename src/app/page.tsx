@@ -34,15 +34,16 @@ export default function Home() {
 
             {/* Main Headline */}
             <h1 className="text-display-lg md:text-display-xl font-bold text-foreground max-w-4xl mb-6 animate-slide-up">
-              Order-of-operations{" "}
-              <span className="text-gradient">functional medicine</span>{" "}
-              for humans who move.
+              Dr. M&apos;s Experienced{" "}
+              <span className="text-gradient">Functional And Sports Medicine</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-body-lg text-foreground-muted max-w-2xl mb-10 animate-slide-up delay-100">
-              Dr. David Musnick breaks down 35+ years of integrative medicine into 
-              actionable protocols. No fluff. No doom scrolling. Just signal.
+            <p className="text-body-lg text-foreground-muted max-w-3xl mb-10 animate-slide-up delay-100">
+              David Musnick MD has 36 years of Sports Medicine, Regenerative Medicine and 28 years 
+              of Functional Medicine experience. He is a master clinician and teacher. In this Podcast 
+              he gets right to the point with highly practical information based on his experience 
+              and on the research. No fluff. No long and boring interviews.
             </p>
 
             {/* Platform Badges */}
